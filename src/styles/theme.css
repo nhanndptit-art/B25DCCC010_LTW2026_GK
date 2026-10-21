@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  --bg-canvas: #F4F6F9;
+  --bg-surface: #FFFFFF;
+  --bg-hover: #EFF6FF;
+  --bg-subtle: #F8FAFC;
+  
+  --ink-primary: #0F172A;
+  --ink-secondary: #475569;
+  --ink-muted: #94A3B8;
+  
+  --border-strong: #CBD5E1;
+  --border-subtle: #E2E8F0;
+  
+  --brand-cobalt: #1D4ED8;
+  --brand-cobalt-hover: #1E40AF;
+  --danger-crimson: #BE123C;
+  --danger-bg: #FFF1F2;
+  
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Khung căn giữa trang */
+#root > div {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+}
+
+/* ==========================================
+   1. THANH MENU (NAVBAR)
+   ========================================== */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: 4px 4px 0px var(--border-subtle);
+  padding: 12px 20px;
+  margin-bottom: 28px;
+  border-radius: 4px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--ink-secondary);
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 3px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+nav a:hover {
+  background-color: var(--bg-subtle);
+  color: var(--ink-primary);
+}
+
+/* BẮT BUỘC THEO ĐỀ MỤC 1 & 2.3: chữ đỏ, in đậm */
+.active,
+nav a.active {
+  color: red;
+  font-weight: bold;
+  background-color: #FEF2F2;
+  border-bottom: 2px solid red;
+}
+
+/* ==========================================
+   2. KHUNG NỘI DUNG CHÍNH (MAIN)
+   ========================================== */
+main > div {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: 4px 4px 0px var(--border-subtle);
+  border-radius: 4px;
+  padding: 28px 32px;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink-primary);
+}
+
+/* Định dạng các dòng thống kê ở Trang chủ & Chi tiết */
+main > div > p {
+  font-size: 16px;
+  margin: 12px 0;
+  padding: 12px 16px;
+  background-color: var(--bg-subtle);
+  border-left: 3px solid var(--brand-cobalt);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================
+   3. THANH TÌM KIẾM VÀ LỌC (FILTER BAR)
+   ========================================== */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  padding: 16px 20px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.filter-bar > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-bar label {
+  font-weight: 600;
+  color: var(--ink-primary);
+  font-size: 14px;
+}
+
+.filter-bar input,
+.filter-bar select {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  background-color: var(--bg-surface);
+  color: var(--ink-primary);
+  min-width: 220px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filter-bar select {
+  min-width: 150px;
+  cursor: pointer;
+}
+
+.filter-bar input:focus,
+.filter-bar select:focus {
+  outline: none;
+  border-color: var(--brand-cobalt);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+/* ==========================================
+   4. BẢNG SỰ KIỆN (EVENT TABLE)
+   ========================================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 14.5px;
+  border: 1px solid var(--border-strong);
+}
+
+thead tr {
+  background-color: #F1F5F9;
+  border-bottom: 2px solid var(--border-strong);
+}
+
+th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--ink-primary);
+  border-right: 1px solid var(--border-subtle);
+}
+
+td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+/* Cột Ngày và Số chỗ dùng font Monospace để thẳng hàng số liệu */
+td:nth-child(3),
+td:nth-child(4) {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Link tên sự kiện trong bảng */
+td a {
+  color: var(--brand-cobalt);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+td a:hover {
+  text-decoration: underline;
+  color: var(--brand-cobalt-hover);
+}
+
+/* BẮT BUỘC THEO ĐỀ MỤC 3: Rê chuột lên dòng thì đổi màu nền */
+tbody tr {
+  transition: background-color 0.12s ease;
+}
+
+tbody tr:hover {
+  background-color: var(--bg-hover);
+}
+
+/* BẮT BUỘC THEO ĐỀ MỤC 3: Sự kiện đã đầy có chữ xám, in nghiêng */
+.full-row {
+  color: gray;
+  font-style: italic;
+  background-color: #FAFAFA;
+}
+
+.full-row td a {
+  color: gray;
+}
+
+/* ==========================================
+   5. NÚT BẤM (BUTTONS)
+   ========================================== */
+button {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: all 0.15s ease;
+}
+
+/* Nút Đăng ký & Nút Thêm (Primary Action) */
+td button:first-of-type,
+form button[type="submit"] {
+  background-color: var(--brand-cobalt);
+  color: #FFFFFF;
+}
+
+td button:first-of-type:hover:not(:disabled),
+form button[type="submit"]:hover:not(:disabled) {
+  background-color: var(--brand-cobalt-hover);
+}
+
+/* Nút Xóa (Destructive Action) */
+td button:last-of-type {
+  background-color: var(--danger-bg);
+  color: var(--danger-crimson);
+  border-color: #FECDD3;
+  margin-right: 0;
+}
+
+td button:last-of-type:hover {
+  background-color: var(--danger-crimson);
+  color: #FFFFFF;
+}
+
+/* Nút Quay lại ở trang chi tiết */
+main > div > button {
+  margin-top: 12px;
+  background-color: var(--bg-surface);
+  color: var(--ink-primary);
+  border: 1px solid var(--border-strong);
+  padding: 8px 18px;
+}
+
+main > div > button:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--ink-secondary);
+}
+
+/* BẮT BUỘC THEO ĐỀ MỤC 3: Sự kiện đã đầy thì nút bị mờ, không bấm được */
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #CBD5E1 !important;
+  color: #64748B !important;
+  border-color: #CBD5E1 !important;
+}
+
+/* ==========================================
+   6. FORM THÊM MỚI (ADD EVENT FORM)
+   ========================================== */
+form {
+  max-width: 520px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink-primary);
+  margin-bottom: 6px;
+  width: auto;
+}
+
+.form-group input {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  background-color: var(--bg-surface);
+  color: var(--ink-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--brand-cobalt);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+form button[type="submit"] {
+  margin-top: 6px;
+  padding: 10px 24px;
+  font-size: 15px;
+}
+
+/* Thông báo lỗi dưới Form */
+.error-msg {
+  color: var(--danger-crimson) !important;
+  background-color: var(--danger-bg) !important;
+  border-left: 4px solid var(--danger-crimson) !important;
+  padding: 12px 16px !important;
+  font-weight: 600;
+  margin-top: 16px;
+  max-width: 520px;
+}
+
+/* ==========================================
+   7. ĐỒNG HỒ ĐẾM NGƯỢC & RESPONSIVE
+   ========================================== */
+/* Dòng đếm ngược trong trang EventDetail (thẻ p thứ 5) */
+main > div > p:nth-of-type(5) {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--brand-cobalt);
+  background-color: #EFF6FF;
+  border-left: 4px solid var(--brand-cobalt);
+}
+
+@media (max-width: 768px) {
+  #root > div {
+    padding: 16px 12px;
+  }
+
+  main > div {
+    padding: 20px 16px;
+    overflow-x: auto;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar > div {
+    justify-content: space-between;
+  }
+}
