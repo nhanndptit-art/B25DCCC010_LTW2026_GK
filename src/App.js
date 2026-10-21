@@ -1,25 +1,105 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import EventList from './pages/EventList';
+import AddEvent from './pages/AddEvent';
+import EventDetail from './pages/EventDetail';
 
-function App() {
+const App = () => {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    axios
+      .get('/data/events.json', { signal: controller.signal })
+      .then((res) => {
+        setEvents(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Không tải được dữ liệu');
+        setLoading(false);
+      });
+  }, []);
+
+  const handleRegister = (id) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((ev) =>
+        ev.id === id && ev.registered < ev.capacity
+          ? { ...ev, registered: ev.registered + 1 }
+          : ev
+      )
+    );
+  };
+
+  const handleDelete = (id) => {
+    setEvents((prevEvents) => prevEvents.filter((ev) => ev.id !== id));
+  };
+
+  const handleAdd = (newEventData) => {
+    setEvents((prevEvents) => {
+      const maxId = prevEvents.reduce(
+        (max, ev) => (ev.id > max ? ev.id : max),
+        0
+      );
+      const newEvent = {
+        ...newEventData,
+        id: maxId + 1,
+        capacity: Number(newEventData.capacity),
+        registered: 0,
+      };
+      return [...prevEvents, newEvent];
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route
+          index
+          element={<Home loading={loading} error={error} />}
+        />
+        <Route
+          path="events"
+          element={
+            <EventList
+              events={events}
+              loading={loading}
+              error={error}
+              onRegister={handleRegister}
+              onDelete={handleDelete}
+            />
+          }
+        />
+        <Route
+          path="events/new"
+          element={
+            <AddEvent
+              onAdd={handleAdd}
+              loading={loading}
+              error={error}
+            />
+          }
+        />
+        <Route
+          path="events/:id"
+          element={
+            <EventDetail
+              events={events}
+              loading={loading}
+              error={error}
+            />
+          }
+        />
+      </Route>
+    </Routes>
   );
-}
+};
 
 export default App;
