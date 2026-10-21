@@ -21,12 +21,18 @@ const AddEvent = ({ onAdd, loading, error }) => {
       return;
     }
 
+    const capNum = Number(capacity);
+    if (!Number.isInteger(capNum) || capNum < 10 || capNum > 1000) {
+      setFormError('Sức chứa phải từ 10 đến 1000');
+      return;
+    }
+
     setFormError('');
     onAdd({
       name: name.trim(),
       location: location.trim(),
       date,
-      capacity: Number(capacity),
+      capacity: capNum,
     });
 
     navigate('/events', { replace: true });

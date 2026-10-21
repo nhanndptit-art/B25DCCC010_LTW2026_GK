@@ -14,6 +14,17 @@ const App = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const savedEvents = localStorage.getItem('gk_events');
+    if (savedEvents) {
+      try {
+        setEvents(JSON.parse(savedEvents));
+        setLoading(false);
+        return;
+      } catch (e) {
+        // Nếu JSON lỗi thì tiếp tục gọi API bên dưới
+      }
+    }
+
     const controller = new AbortController();
 
     axios
@@ -22,11 +33,24 @@ const App = () => {
         setEvents(res.data);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        if (axios.isCancel(err)) {
+          return;
+        }
         setError('Không tải được dữ liệu');
         setLoading(false);
       });
+
+    return () => {
+      controller.abort();
+    };
   }, []);
+
+  useEffect(() => {
+    if (!loading && !error) {
+      localStorage.setItem('gk_events', JSON.stringify(events));
+    }
+  }, [events, loading, error]);
 
   const handleRegister = (id) => {
     setEvents((prevEvents) =>
@@ -63,7 +87,7 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         <Route
           index
-          element={<Home loading={loading} error={error} />}
+          element={<Home events={events} loading={loading} error={error} />}
         />
         <Route
           path="events"
